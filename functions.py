@@ -19,7 +19,7 @@ def player_initialize_combination():
     player_combination = []
     i = 1
     while i < 5:
-        combination = int(input(f"Entrée votre combinaison N°{i} \n"))
+        combination = int(input(f"Entrée votre combinaison N°{i} :  "))
         if combination in SET_OF_NUMBERS:
             player_combination.append(combination)
             i += 1 
@@ -27,7 +27,7 @@ def player_initialize_combination():
             print("la combinaison choisie n'existe pas dans le champ de possibilité ci-dessus:")
             print(f"{SET_OF_NUMBERS}")
             print("Réssayer à nouveau !!\n")
-            combination = int(input(f"Entrée votre combinaison N°{i} \n"))
+            combination = int(input(f"Entrée votre combinaison N°{i} :  \n"))
             player_combination.append(combination)
             i += 1 
 
