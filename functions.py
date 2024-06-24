@@ -18,22 +18,24 @@ def generate_combination():
 def player_initialize_combination():    
     player_combination = []
     i = 1
-    while i < 5:
-        combination = int(input(f"Entrée votre combinaison N°{i} :  "))
-        if combination in SET_OF_NUMBERS:
-            player_combination.append(combination)
-            i += 1 
-        else :
-            print("la combinaison choisie n'existe pas dans le champ de possibilité ci-dessus:")
-            print(f"{SET_OF_NUMBERS}")
-            print("Réssayer à nouveau !!\n")
-            combination = int(input(f"Entrée votre combinaison N°{i} :  \n"))
-            player_combination.append(combination)
-            i += 1 
+    while i < 5:   
+        while True:
+            try:
+                combination = int(input(f"Entrée votre combinaison N°{i} :  "))
+                if combination in SET_OF_NUMBERS:
+                    player_combination.append(combination)
+                    i += 1
+                    break
+                else:
+                    print("La combinaison choisie n'existe pas dans le champ de possibilité ci-dessous:")
+                    print(f"{SET_OF_NUMBERS}")
+                    print("Réessayez à nouveau !!\n")
+            except ValueError:
+                print("Entrez un nombre entier.\n")
 
-    print("*********************************************")
-    print(f"votre combination est {player_combination}  **")
-    print("*********************************************")
+    print("************************************************")
+    print(f"*  votre combination est {player_combination}               *")
+    print("************************************************")
 
     return player_combination
 
@@ -42,28 +44,28 @@ def player_initialize_combination():
 
 def check_combinations(player_combination, initial_combination):
     check_combination = []
-    count_of_number = 0
+    matched_positions = [False] * len(initial_combination)  # Track matched positions to avoid double counting
+    
     for position, number in enumerate(player_combination):
-      
         if number in initial_combination:
-            ####### PROBLEME RENCONTRE: Gestion des positionnements 
-
-            ### To count the occurence of a number in the initial list
-            count_of_number = initial_combination.count(number)
-            while count_of_number >= 0: 
-                if number == initial_combination[position]:
-                    check_combination.append(f"{number}*")
-                    
-                else:
-                    check_combination.append(f"{number}°")
-                    
-                count_of_number -=1               
+            if number == initial_combination[position] and not matched_positions[position]:
+                check_combination.append(f"{number}*")
+                matched_positions[position] = True  # Mark this position as matched
             else:
+                # Find the next unmatched position for the current number
+                found_match = False
+                for pos, val in enumerate(initial_combination):
+                    if val == number and not matched_positions[pos]:
+                        matched_positions[pos] = True  
+                        found_match = True
+                        break
+                if found_match:
+                    check_combination.append(f"{number}°")
+                else:
                     check_combination.append(f"{number}")
-
-                        
         else:
             check_combination.append(f"{number}")
+    
     return check_combination
 
 # This function allows to manage player's turns game which is 10 turns
@@ -83,9 +85,9 @@ def turn_manager(initial_combination):
                 correct_combination +=1
         if correct_combination == 4:
             print("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
-            print("°                    Vous avez trouvez la combinaison exacte !!                                                         °")
-            print(f"°                          {initial_combination}                                                              °")
-            print("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
+            print("°                    Vous avez trouvez la combinaison exacte !!                           °")
+            print(f"°                          {initial_combination}                                         °")
+            print("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
             break
 
         numbers_of_turns += 1
@@ -104,7 +106,7 @@ def display_game_rules():
     print("     ---------------------------------------------------------------------------------------------------------------")
     print("-------------------------------------------------------------------------------------------------------------------------------------")
 
-    print (" Règles du Jeu : ")
+    print (" REGLES DU JEU : ")
     print("""
             Le jeu de Mastermind consiste à deviner une combinaison secrète de 04 nombres. Voici comment cela fonctionne de manière simple et fun :
 
@@ -124,3 +126,11 @@ def display_game_rules():
 initial_combination = generate_combination()
 turn_manager(initial_combination)
 
+# Example input
+input_value = 42
+
+# Check if the input is an integer
+if isinstance(input_value, int):
+    print("The input is an integer.")
+else:
+    print("The input is not an integer.")
