@@ -11,6 +11,7 @@ def generate_combination():
     
     initial_combination = [random.choice(list(SET_OF_NUMBERS)) for _ in range (4)]
     print(initial_combination)
+    display_game_rules()
     return initial_combination
 
 # This function allows to initialize players combination
@@ -49,13 +50,18 @@ def check_combinations(player_combination, initial_combination):
 
             ### To count the occurence of a number in the initial list
             count_of_number = initial_combination.count(number)
-            while count_of_number > 0: 
+            while count_of_number >= 0: 
                 if number == initial_combination[position]:
                     check_combination.append(f"{number}*")
-                    count_of_number -=1
+                    
                 else:
                     check_combination.append(f"{number}°")
-                    count_of_number -=1          
+                    
+                count_of_number -=1               
+            else:
+                    check_combination.append(f"{number}")
+
+                        
         else:
             check_combination.append(f"{number}")
     return check_combination
@@ -91,6 +97,28 @@ def turn_manager(initial_combination):
             break
 
 ### Faire une fonction pour l'affichage des règles du jeu
+def display_game_rules():
+    print("-------------------------------------------------------------------------------------------------------------------------------------")
+    print("     ---------------------------------------------------------------------------------------------------------------")
+    print("             ----------------------------------------------- MASTERMIND -----------------------------------              ")
+    print("     ---------------------------------------------------------------------------------------------------------------")
+    print("-------------------------------------------------------------------------------------------------------------------------------------")
+
+    print (" Règles du Jeu : ")
+    print("""
+            Le jeu de Mastermind consiste à deviner une combinaison secrète de 04 nombres. Voici comment cela fonctionne de manière simple et fun :
+
+            1. Devine la combinaison secrète de nombres.
+            2. Pour chaque nombre deviné :
+            - '*' signifie que le chiffre est correct et bien placé.
+            - '°' signifie que le chiffre est correct mais mal placé.
+            - Pas de symbole signifie que le chiffre est incorrect.
+            3. Utilise ces indices pour affiner ta prochaine tentative.
+
+            Prêt à défier ton esprit logique et ton sens de la déduction ? Que la partie commence !
+""")
+
+
 
 
 initial_combination = generate_combination()
