@@ -20,13 +20,13 @@ def player_initialize_combination():
     while i < 5:   
         while True:
             try:
-                combination = int(input(f"Entrée votre combinaison N°{i} :  "))
+                combination = int(input(f"Entrée le chiffre N°{i} de votre combinaison :  "))
                 if combination in SET_OF_NUMBERS:
                     player_combination.append(combination)
                     i += 1
                     break
                 else:
-                    print("La combinaison choisie n'existe pas dans le champ de possibilité ci-dessous:")
+                    print("Le chiffre choisie n'existe pas dans le champ de possibilité ci-dessous:")
                     print(f"{SET_OF_NUMBERS}")
                     print("Réessayez à nouveau !!\n")
             except ValueError:
@@ -42,28 +42,29 @@ def player_initialize_combination():
 # check also if it's at the correct position by using the symbol (*) or wrong position by using this symbol(°) 
 
 def check_combinations(player_combination, initial_combination):
-    check_combination = []
+    check_combination = [0] * len(initial_combination)
     matched_positions = [False] * len(initial_combination)  # Track matched positions to avoid double counting
     
     for position, number in enumerate(player_combination):
         if number in initial_combination:
             if number == initial_combination[position] and not matched_positions[position]:
-                check_combination.append(f"{number}*")
+                check_combination[position] = f"{number}*"
                 matched_positions[position] = True  # Mark this position as matched
             else:
                 # Find the next unmatched position for the current number
                 found_match = False
+                pos_number = 0
                 for pos, val in enumerate(initial_combination):
                     if val == number and not matched_positions[pos]:
                         matched_positions[pos] = True  
                         found_match = True
                         break
                 if found_match:
-                    check_combination.append(f"{number}°")
+                    check_combination[position] = f"{number}°"
                 else:
-                    check_combination.append(f"{number}")
+                    check_combination[position] = f"{number}"
         else:
-            check_combination.append(f"{number}")
+            check_combination[position] = f"{number}"
     
     return check_combination
 
@@ -116,8 +117,9 @@ def display_game_rules():
             - Pas de symbole signifie que le chiffre est incorrect.
             3. Utilise ces indices pour affiner ta prochaine tentative.
 
-            Prêt à défier ton esprit logique et ton sens de la déduction ? Que la partie commence !
+            Prêt à défier ton esprit logique et ton sens de la déduction ? Que la partie commence ! \n\n
 """)
+    print(f""" \t \t Le champ de possibilités est : {SET_OF_NUMBERS}  \n \n""")
 
 
 
@@ -125,11 +127,4 @@ def display_game_rules():
 initial_combination = generate_combination()
 turn_manager(initial_combination)
 
-# Example input
-input_value = 42
 
-# Check if the input is an integer
-if isinstance(input_value, int):
-    print("The input is an integer.")
-else:
-    print("The input is not an integer.")
