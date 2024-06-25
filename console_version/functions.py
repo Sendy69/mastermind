@@ -10,7 +10,6 @@ SET_OF_NUMBERS = set(random.randint(1, 10) for _ in range(6))
 def generate_combination():
     
     initial_combination = [random.choice(list(SET_OF_NUMBERS)) for _ in range (4)]
-    print(initial_combination)
     display_game_rules()
     return initial_combination
 
