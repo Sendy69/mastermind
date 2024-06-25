@@ -34,7 +34,7 @@ def player_initialize_combination():
 
     print("************************************************")
     print(f"*  votre combination est {player_combination}               *")
-    print("************************************************")
+    print("************************************************\n")
 
     return player_combination
 
@@ -78,8 +78,8 @@ def turn_manager(initial_combination):
         player_combination = player_initialize_combination()
         check_combination = check_combinations(player_combination, initial_combination)
         correct_combination = 0
+        print(f"{check_combination}\n")
 
-        print(check_combination)
         for combination in check_combination:                    
             if "*" in combination:
                 correct_combination +=1
